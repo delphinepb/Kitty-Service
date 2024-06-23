@@ -97,7 +97,7 @@ This section details the different endpoints available for interacting with the 
 
 #### 4. Check Kitty Availability
 
-- **URL** : `/api/kitties/{kittyId}/availability`
+- **URL** : `/api/kitties/{kittyId}/available`
 - **Method HTTP** : `GET`
 - **Description** : Check that the kitty is available (at least 3 checkouts and €10).
 - **Parameters of URL** :
