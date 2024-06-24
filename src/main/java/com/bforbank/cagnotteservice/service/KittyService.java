@@ -18,7 +18,6 @@ public class KittyService {
         this.kittyRepository = kittyRepository;
     }
 
-    // Crée une nouvelle cagnotte
     public Kitty createKitty() {
         Kitty newKitty = new Kitty();
         newKitty.setAmount(0.0);
@@ -26,7 +25,6 @@ public class KittyService {
         return kittyRepository.save(newKitty);
     }
 
-    // Ajoute un montant à la cagnotte existante
     public Kitty addAmountToKitty(Long kittyId, double amount) throws Exception {
         Optional<Kitty> optionalKitty = kittyRepository.findById(kittyId);
         if (optionalKitty.isPresent()) {
@@ -39,7 +37,6 @@ public class KittyService {
         }
     }
 
-    // Vérifie si une cagnotte est disponible
     public boolean isKittyAvailable(Long kittyId) throws Exception {
         Optional<Kitty> optionalKitty = kittyRepository.findById(kittyId);
         if (optionalKitty.isPresent()) {
@@ -50,12 +47,10 @@ public class KittyService {
         }
     }
 
-    // Obtient une cagnotte par ID
     public Kitty findKittyById(Long kittyId) throws Exception {
         return kittyRepository.findById(kittyId).orElseThrow(() -> new Exception("Kitty not found"));
     }
 
-    // Supprime une cagnotte par ID
     public void deleteKittyById(Long kittyId) throws Exception {
         if (kittyRepository.existsById(kittyId)) {
             kittyRepository.deleteById(kittyId);
@@ -64,7 +59,6 @@ public class KittyService {
         }
     }
 
-    // Liste toutes les cagnottes
     public List<Kitty> getAllKitties() {
         return kittyRepository.findAll();
     }

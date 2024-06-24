@@ -1,3 +1,8 @@
+package com.bforbank.cagnotteservice.controller;
+
+import com.bforbank.cagnotteservice.entity.Client;
+import com.bforbank.cagnotteservice.entity.Kitty;
+import com.bforbank.cagnotteservice.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,43 +18,28 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    // Get all clients
     @GetMapping
     public ResponseEntity<List<Client>> getAllClients() {
         List<Client> clients = clientService.getAllClients();
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+        return ResponseEntity.ok(clients);
     }
 
-    // Client a client by id
     @GetMapping("/{clientId}")
-    public ResponseEntity<Client> getClientById(@PathVariable Long clientId) {
+    public ResponseEntity<Client> getClientById(@PathVariable Long clientId) throws Exception {
         Optional<Client> client = clientService.getClientById(clientId);
         return client.map(ResponseEntity::ok)
                      .orElse(ResponseEntity.notFound().build());
     }
 
-    // Create a client
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
-        Client createdClient = clientService.createClient(client);
-        return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
+    public ResponseEntity<Client> createClient() {
+        Client createdClient = clientService.createClient();
+        return ResponseEntity.ok(createdClient);
     }
 
-    // Update a client
-    @PutMapping("/{clientId}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long clientId, @RequestBody Client clientDetails) {
-        Optional<Client> optionalClient = clientService.getClientById(clientId);
-        if (optionalClient.isPresent()) {
-            Client updatedClient = clientService.updateClient(clientId, clientDetails);
-            return ResponseEntity.ok(updatedClient);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
-    // Delete a client
     @DeleteMapping("/{clientId}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long clientId) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long clientId) throws Exception {
         Optional<Client> optionalClient = clientService.getClientById(clientId);
         if (optionalClient.isPresent()) {
             clientService.deleteClient(clientId);
